@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AsyncExample
@@ -39,14 +40,49 @@ namespace AsyncExample
             Console.WriteLine("Ending MethodHandlingOneTask");
         }
 
-        private static async Task MainAsync()
+        private static void MethodHandlingMultipleTasks()
         {
-            await MethodHandlingOneTask();
+            Console.WriteLine("Starting MethodHandlingMultipleTasks");
+
+            List<Task<string>> allResults = new List<Task<string>>();
+            allResults.Add(DelayedMethodThatSucceds());
+            allResults.Add(DelayedMethodThatFails());
+
+            try
+            {
+                Task.WaitAll(allResults.ToArray());
+            }
+            catch (AggregateException exceptions)
+            {
+                foreach (var ex in exceptions.InnerExceptions)
+                {
+                    Console.Error.WriteLine(ex.Message);
+                }
+            }
+
+            foreach (var result in allResults)
+            {
+                if (result.Status == TaskStatus.RanToCompletion)
+                {
+                    Console.WriteLine("status: {0}, result: {1}",
+                    result.Status, result.Result, result.Exception?.Message);
+                }
+                else
+                {
+                    Console.WriteLine("status: {0}, reason: {1}",
+                    result.Status, result.Exception?.Message);
+                }
+            }
+
+
+            Console.WriteLine("Ending MethodHandlingMultipleTasks");
         }
+
 
         static void Main(string[] args)
         {
-            MainAsync().GetAwaiter().GetResult();
+            //MethodHandlingOneTask().GetAwaiter().GetResult();
+            MethodHandlingMultipleTasks();
         }
     }
 }
