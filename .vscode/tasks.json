@@ -49,6 +49,17 @@
                 "aruanoguate/dotnet-async-example"
             ],
             "problemMatcher": []
+        },
+        {
+            "label": "dockerun",
+            "command": "docker",
+            "type": "process",
+            "args": [
+                "run",
+                "aruanoguate/dotnet-async-example"
+            ],
+            "problemMatcher": []
         }
+
     ]
 }
