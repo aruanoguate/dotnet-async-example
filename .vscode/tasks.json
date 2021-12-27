@@ -44,9 +44,9 @@
             "type": "process",
             "args": [
                 "build",
-                ".",
                 "-t",
-                "aruanoguate/dotnet-async-example"
+                "aruanoguate/dotnet-async-example",
+                "."
             ],
             "problemMatcher": []
         },
@@ -56,10 +56,12 @@
             "type": "process",
             "args": [
                 "run",
+                "--name",
+                "async_example",
+                "--rm",
                 "aruanoguate/dotnet-async-example"
             ],
             "problemMatcher": []
         }
-
     ]
 }
