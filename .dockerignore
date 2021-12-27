@@ -6,3 +6,6 @@
 # files
 Dockerfile*
 **/*.md
+
+# IDE specific
+**/.vscode/
